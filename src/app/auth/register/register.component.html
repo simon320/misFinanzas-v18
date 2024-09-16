@@ -1,0 +1,42 @@
+<section>
+  <div class="register__container">
+
+      <h1 class="title">misFinanzas</h1>
+
+      <form class="form__container" (ngSubmit)="registerNewUser()" [formGroup]="userForm">
+          <input formControlName="mail" type="email" placeholder="Ingrese su email">
+          <div class="container__error">
+            @if(inputInvalid('mail')) {
+              <small class="error__message"> {{ mailErrorMsg }} </small>
+            }
+          </div>
+
+          <input formControlName="name" type="text" placeholder="Ingrese su nombre">
+          <div class="container__error">
+            @if(inputInvalid('name')) {
+              <small class="error__message"> {{ nameErrorMsg }} </small>
+            }
+          </div>
+
+          <input formControlName="password" type="password" placeholder="Ingrese su contraseña">
+          <div class="container__error">
+            @if(inputInvalid('password')) {
+              <small class="error__message"> {{ passErrorMsg }} </small>
+            }
+          </div>
+
+          <input formControlName="confirmPassword" type="password" placeholder="Repita la contraseña">
+          <div class="container__error">
+            @if(inputInvalid('confirmPassword')) {
+              <small class="error__message"> {{ cofirmPassErrorMsg }} </small>
+            }
+          </div>
+
+          <div class="buttons__container">
+            <button type="submit" class="active">CREAR CUENTA</button>
+            <button class="button__link" [routerLink]="pathLogin">Ya tengo cuenta</button>
+          </div>
+      </form>
+
+  </div>
+</section>

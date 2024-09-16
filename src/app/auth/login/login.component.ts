@@ -1,17 +1,27 @@
+import { Router, RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { emailPattern, notEmpty } from './utils/utils';
+
+import { PATH } from '../../common/enums/enum';
+import { AuthService } from '../services/auth.service';
+import { emailPattern, notEmpty } from '../utils/utils';
+import { ToastService } from '../../common/components/toast/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ ReactiveFormsModule ],
+  imports: [ ReactiveFormsModule, RouterLink ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup;
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private toastService = inject(ToastService);
+  private authService = inject(AuthService);
+
+  public loginForm!: FormGroup;
+  public pathRegister: string = PATH.REGISTER;
 
   get mailErrorMsg(): string {
     const errors = this.loginForm.get('mail')?.errors;
@@ -32,17 +42,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    // private validateService: ValidateService,
-    // private authService: AuthService,
-    // private userSignal: UserStoreService,
-    // private walletService: WalletService,
-    // private walletSignal: WalletStoreService,
-    ) { }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.createForm();
   }
 
@@ -65,31 +65,18 @@ export class LoginComponent implements OnInit {
       return this.loginForm.markAllAsTouched();
 
     const { mail, password } = this.loginForm.value;
-    // this.authService.login({ mail, password })
-    //   .subscribe({
-    //     next: (data) => {
-    //       if (data) {
-    //         localStorage.setItem('token', data.token);
-    //         localStorage.setItem('id', data.user._id!);
-    //         this.userSignal.setState(data.user);
 
-    //         if(data.user._id)
-    //           this.walletService.getWallet(data.user._id!).subscribe( wallet => this.walletSignal.setState(wallet) );
+    if( this.authService.login(mail, password) ) {
+      this.router.navigateByUrl('');
+    }
+    else {
+      this.toastService.show(
+        'ERROR',
+        'Lo siento...',
+        'Los datos ingresados no son correctos.'
+      );
+    }
 
-    //         // if (data.user.first)
-    //         //   this.router.navigate([URL.FIRST_ADMISSION], { queryParams: {id: data.user._id?.toString(), name: data.user.nickname }});
-    //         // else
-    //           this.router.navigate([URL.HOME]);
-    //       }
-    //     },
-    //     error: err => {
-    //       if (err.error.message === 'USER_NOT_FOUND')
-    //         this.loginForm.get('mail')!.setErrors({ USER_NOT_FOUND: true })
-
-    //       if (err.error.message === 'PASSWORD_INCORRECT')
-    //         this.loginForm.get('password')!.setErrors({ PASSWORD_INCORRECT: true })
-    //     }
-    //   })
   }
 
 }
