@@ -15,6 +15,7 @@ export class AuthService {
       const currentUser: User = JSON.parse(userExists);
 
       if(currentUser.password === password) {
+        localStorage.setItem('tokenMF', mail);
         return true;
       }
     }

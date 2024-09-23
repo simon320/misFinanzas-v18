@@ -1,0 +1,86 @@
+
+<section class="option__container">
+
+  <div class="acount__container">
+    <h2 class="amount">{{ totalAmount() | currency }}</h2>
+    <span>Total</span>
+  </div>
+
+
+  <div class="slider__container">
+    <div #slider class="slider" (scroll)="accountClickHandle()">
+
+      @for (account of accounts(); track $index) {
+        <div class="card">
+          <h1 class="account__name">{{ account.name }}</h1>
+          <div class="footer__card">
+            <h3 class="account__amount">{{ account.amount | currency | myCurrency }}</h3>
+            @if(account.type === 'Tarjeta de Credito') {
+              <div class="input__debit">
+                <h5>Debitar</h5>
+                <icon-checkbox [check]="checked" (click)="clickCheckbox()"/>
+              </div>
+            }
+          </div>
+        </div>
+      } @empty {
+        <h1 class="empty__account">No tenes ninguna cuenta creada</h1>
+      }
+
+    </div>
+  </div>
+
+
+  <div class="buttons__container">
+    @if(accounts() && accounts().length !== 0) {
+      @if(this.selectedAccount().type === 'Tarjeta de Credito') {
+        <div class="set__button">
+          <button id="add">
+            <icon-card />
+          </button>
+          <label for="add">editar cierre</label>
+        </div>
+      }
+      <div class="set__button">
+        <button id="add" (click)="removeAccount()">
+          <icon-trash-can />
+        </button>
+        <label for="add">eliminar cuenta</label>
+      </div>
+    }
+    <div class="set__button">
+      <button id="add" (click)="addAccount()">
+        <icon-plus />
+      </button>
+      <label for="add">nueva cuenta</label>
+    </div>
+  </div>
+
+
+  <div #selectTypeMovement class="type__movement__container">
+    <h4 (click)="setTypeMovement('all')">TODOS</h4>
+    <h4 (click)="setTypeMovement('account')">CUENTA</h4>
+  </div>
+
+
+  <div class="movements__container">
+    @for(movement of showMovement(); track $index; let first = $first; let last = $last) {
+      @if(first || formattedDate( movement.day ) !== formattedDate( showMovement()[$index -1].day )) {
+        <h3 class="label__date">{{ movement.day | myDate }}</h3>
+      }
+      <div [ngClass]="{'last__movement' : last}" class="movements">
+        <div class="label">
+          <p>{{ movement.description | titlecase }}</p>
+        </div>
+        @if(movement.character === 'income') {
+          <p class="income">+ {{ movement.amount | currency | myCurrency }}</p>
+        } @else {
+          <p class="expense">- {{ movement.amount | currency | myCurrency }}</p>
+        }
+      </div>
+      } @empty {
+      <h1 class="empty__account">No tenes movimientos registrados con esta cuenta</h1>
+    }
+  </div>
+
+</section>

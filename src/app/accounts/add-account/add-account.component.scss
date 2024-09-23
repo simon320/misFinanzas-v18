@@ -1,0 +1,95 @@
+.option__container {
+  padding-top: 1.6rem;
+  padding-bottom: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  background: var(--trasition-blue);
+  height: 100%;
+  width: 100vw;
+}
+
+h1 {
+  text-align: center;
+  color: var(--title-menu);
+  font-size: 1.4rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.8rem
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+.input-doble__container {
+  display: flex;
+  gap: 1rem;
+  width: 95%;
+}
+
+input {
+  background: var(--dark-blue);
+  width: 90%;
+  height: 2.5rem;
+  border: 2px solid var(--border-input);
+  border-radius: 5px;
+  box-shadow: inset 0 3px 6px var(--shadow-input);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: aliceblue;
+  padding-right: 1rem;
+  text-align: end;
+}
+input::placeholder {
+  color: var(--dark-grey);
+}
+
+
+.button__accept {
+  width: 131px;
+  height: 50px;
+  margin-right: 2rem;
+  align-self: flex-end;
+  border: none;
+  border-radius: 30px;
+  background: var(--light-green);
+
+  box-shadow: 0 3px 6px var(--btn_shadow-1),
+              inset 0 3px 6px var(--btn_shadow-2);
+}
+
+select {
+  background: var(--dark-blue);
+  width: 90%;
+  height: 2.5rem;
+  border: 2px solid var(--border-input);
+  border-radius: 5px;
+  color: var(--title-menu);
+  padding-left: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.input__container {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+}
+
+.label__input {
+  align-self: flex-start;
+  margin-left: 1.5rem;
+  color: var(--label-input);
+}

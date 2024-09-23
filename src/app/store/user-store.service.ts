@@ -6,6 +6,7 @@ import { User } from '../common/interfaces/interface';
 export class UserStore {
   private intialState: User = {name: '', mail: '', password: ''};
   private userSignal = signal<User>(this.intialState);
+  private id!: string;
 
   constructor() {
     this.update();
@@ -17,8 +18,7 @@ export class UserStore {
 
       if(user().mail !== '') {
         const key = 'user:' + user().mail;
-        localStorage.setItem(key, JSON.stringify(this.userSignal()));
-        console.log('¡Usuario actulizado!');
+        localStorage.setItem( key, JSON.stringify( user() ));
       }
     });
   }
@@ -29,6 +29,14 @@ export class UserStore {
 
   public getSignal(): Signal<User>{
     return computed(() => this.userSignal());
+  }
+
+  public setId(id: string): void {
+    this.id = id;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 
 }

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     const { mail, password } = this.loginForm.value;
 
     if( this.authService.login(mail, password) ) {
-      localStorage.setItem('tokenMF', 'true');
+      localStorage.setItem('tokenMF', mail);
       this.router.navigateByUrl(PATH.DASHBOARD);
     }
     else {
