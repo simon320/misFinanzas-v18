@@ -1,0 +1,40 @@
+section {
+  height: 10%;
+  padding: 1rem;
+  background-color: var(--double-dark-blue);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 2px 2px 8px var(--double-dark-blue);
+
+
+  .container__user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .container__img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 1px solid var(--medium-blue);
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    h1 {
+      color: var(--light-grey);
+      justify-content: flex-start;
+    }
+
+  }
+
+  icon-bell {
+    color: var(--light-green);
+  }
+}

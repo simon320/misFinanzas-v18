@@ -1,93 +1,99 @@
 import { Router } from '@angular/router';
-import { Component, Signal, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { WalletStore } from '../../store/wallet-store.service';
+import { PATH } from '../../common/enums/enum';
+import { WalletStore } from '../../store/wallet.store';
 import { Account, Movement } from '../../common/interfaces/interface';
 import { ToastService } from '../../common/components/toast/toast.service';
-import { PATH } from '../../common/enums/enum';
 
 @Component({
   selector: 'app-add-movement',
   standalone: true,
-  imports: [ ReactiveFormsModule ],
+  imports: [ReactiveFormsModule],
   templateUrl: './add-movement.component.html',
   styleUrl: './add-movement.component.scss'
 })
 export class AddMovementComponent {
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private walletStore = inject(WalletStore);
+  readonly walletStore = inject(WalletStore);
   private toastService = inject(ToastService);
 
   public form!: FormGroup;
-  private readonly wallet = this.walletStore.getSignal();
-  public accounts: Signal<Account[]> = computed( () => this.wallet().accounts );
+  // public accounts: Signal<Account[]> = computed( () => this.walletStore.accounts() );
 
 
   ngOnInit(): void {
     this.createForm();
   }
 
+
   private createForm(): void {
     this.form = this.fb.group({
       character: false,
-      accountId: [''],
+      accountId: ['', Validators.required],
       date: [new Date(), Validators.required],
       amount: [ , Validators.required],
       description: ["", Validators.required],
     })
   }
 
+
+  private checkInvalidForm(): boolean {
+    if(this.form.invalid) {
+      this.toastService.show('ERROR', 'Hay campos sin completar');
+      this.form.markAllAsTouched();
+      return true;
+    }
+
+    else
+      return false;
+  }
+
+
+  private checkInsufficientFunds(accountSelected: Account, amount: number, character: boolean): boolean {
+    if(accountSelected?.type !== "Tarjeta de Credito" && accountSelected?.amount! < amount && character === false) {
+      this.toastService.show('ERROR', 'Dinero insuficiente!');
+      this.form.markAllAsTouched();
+      return true;
+    }
+
+    else
+      return false;
+  }
+
+  // FIXME: cambiar los movimientos a general
   private setMovementInAccount(newMovement: Movement): Account[] {
-    this.accounts().map( account => {
+    this.walletStore.accounts().map( account => {
       if(account.id === newMovement.accountId) {
         account.movements?.unshift( newMovement );
       }
     });
 
-    return this.accounts();
-  }
-
-  private checkInvalidForm(): boolean {
-    if(this.form.invalid) {
-      this.toastService.show('ERROR','Ups!', 'Hay campos sin completar');
-      this.form.markAllAsTouched();
-      return true;
-    }
-
-    else
-      return false;
-  }
-
-  private checkInsufficientFunds(accountSelected: Account, amount: number, character: boolean): boolean {
-    if(accountSelected?.type !== "Tarjeta de Credito" && accountSelected?.amount! < amount && character === false) {
-      this.toastService.show('ERROR','Error!', 'Dinero insuficiente!');
-      this.form.markAllAsTouched();
-      return true;
-    }
-
-    else
-      return false;
+    return this.walletStore.accounts();
   }
 
 
   public saveForm(): void {
-    if(this.checkInvalidForm()) return;
+    if(this.checkInvalidForm())
+      return;
 
     const { accountId, description, amount, character, date } = this.form.value;
-    let accountSelected = this.accounts().find( account => account.id === accountId);
+    let accountSelected = this.walletStore.accounts().find( account => account.id === accountId);
 
     if(this.checkInsufficientFunds(accountSelected!, amount, character))
       return;
 
     let type: 'expense' | 'income';
-    let totalMoney = this.wallet().total_money;
+    let totalMoney = this.walletStore.totalMoney();
+
     if( character === true ) {
       type = 'income';
       totalMoney += amount;
       accountSelected!.amount += amount;
-    } else {
+    }
+    else {
       type = 'expense';
       if(accountSelected?.type !== 'Tarjeta de Credito') {
         totalMoney -= amount;
@@ -107,10 +113,9 @@ export class AddMovementComponent {
       day: new Date(date)
     };
 
-    const newArrayAccount = this.setMovementInAccount( newMovement );
-    this.walletStore.setPartialState({ total_money: totalMoney, accounts: newArrayAccount });
+    this.walletStore.addMovement(totalMoney, newMovement);
     this.form.reset();
-    this.toastService.show('SUCCESS', 'Perfecto', 'Se registro el movimiento');
+    this.toastService.show('SUCCESS', 'Se registro el movimiento');
     this.router.navigateByUrl(PATH.ACCOUNTS);
   }
 }

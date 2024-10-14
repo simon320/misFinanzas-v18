@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-wrapper',
   standalone: true,
-  imports: [ RouterOutlet, NavMenuComponent ],
+  imports: [ RouterOutlet, NavMenuComponent, HeaderComponent ],
   templateUrl: './wrapper.component.html',
   styleUrl: './wrapper.component.scss'
 })

@@ -1,8 +1,10 @@
 import { RouterOutlet } from '@angular/router';
 import { Component, inject } from '@angular/core';
 
-import { UserStore } from './store/user-store.service';
-import { WalletStore } from './store/wallet-store.service';
+import { STORAGE } from './common/enums/enum';
+import { UserStore } from './store/user.store';
+import { DayService } from './store/day.service';
+import { WalletStore } from './store/wallet.store';
 import { ToastComponent } from './common/components/toast/toast.component';
 
 @Component({
@@ -14,26 +16,36 @@ import { ToastComponent } from './common/components/toast/toast.component';
 })
 export class AppComponent {
   private userStore = inject(UserStore);
-  private walletStore = inject(WalletStore);
+  private dayService = inject(DayService);
+  readonly walletStore = inject(WalletStore);
+
 
   constructor() {
     this.setData();
+    this.decideExecute();
   }
+
 
   private setData(): void {
     const token = localStorage.getItem('tokenMF');
 
     if(token) {
       const user = JSON.parse(localStorage.getItem('user:' + token)!);
-      this.userStore.setId(token);
-      this.userStore.setSignal(user);
+      this.userStore.setUserId(token);
+      this.userStore.setUser(user);
 
       const wallet = JSON.parse(localStorage.getItem('wallet:' + token)!);
       if(wallet) {
-        this.walletStore.setSignal(wallet);
+        this.walletStore.setWallet( wallet );
       } else {
-        this.walletStore.intialWallet(token);
+        this.walletStore.setUserId(token);
       }
     }
   }
+
+
+  private decideExecute(): void {
+    localStorage.getItem(STORAGE.AMOUNT_PER_DAY) ? this.dayService.compareDate() : this.dayService.updateAmountPerDay();
+  }
+
 }

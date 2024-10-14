@@ -1,0 +1,29 @@
+@if(isVisible()) {
+  <div [ngClass]="setClass( classType() )">
+
+    @if(classType() === 'ERROR') {
+      <!-- ERROR -->
+      <svg class="svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+    }
+    @else if(classType() === 'SUCCESS') {
+      <!-- SUCCESS -->
+      <svg class="svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    }
+    <div class="text">
+      <p>{{ description() }}</p>
+    </div>
+
+    @if(classType() === 'CONFIRM') {
+      <icon-cross class="svg" (click)="close()"/>
+      <icon-confirm class="svg" (click)="confirm()"/>
+    } @else {
+      <button (click)="close()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    }
+
+  </div>
+}

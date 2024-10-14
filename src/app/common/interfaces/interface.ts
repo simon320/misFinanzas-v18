@@ -1,5 +1,5 @@
 export interface User {
-  _id?: string
+  _id: string
   mail: string
   password: string
   name: string
@@ -14,7 +14,7 @@ export interface Wallet {
   start_selected_day: Date | string
   end_selected_day: Date | string
   movement: Movement[]
-  days: DescriptionDay[]
+  day: Date
   accounts: Account[]
 }
 
@@ -26,6 +26,7 @@ export interface Account {
   amount?: number;
   movements?: Movement[];
   close?: string;
+  debit?: boolean;
 }
 
 export interface Movement {

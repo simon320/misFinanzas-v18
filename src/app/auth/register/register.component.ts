@@ -113,12 +113,11 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const newUser: User = { mail, name, password };
+    const newUser: User = { mail, name, password, _id: mail };
 
     this.authService.register(newUser);
     this.toastService.show(
       'SUCCESS',
-      '!Usuario creado!',
       'Ahora, ingrese esos datos para iniciar secion.'
     );
     this.router.navigateByUrl(PATH.LOGIN);

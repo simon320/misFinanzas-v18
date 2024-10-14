@@ -1,0 +1,50 @@
+
+<section class="option__container">
+  <div class="header__container">
+    <h2>{{ walletStore.daySelected() | myDate }}</h2>
+
+    @if(walletStore.daySelected() >= walletStore.startSelectedDay() && walletStore.daySelected() <= walletStore.endSelectedDay()) {
+      <div class="header__available">
+        <p>Disponible por día</p>
+        <h2 >{{ walletStore.moneyPerDay()| currency | myCurrency }}</h2>
+      </div>
+    }
+  </div>
+
+  <div class="body__container">
+    @for (movement of walletStore.movementDayFilter(); track $index) {
+      @if($index < 4){
+        <div class="movement__container">
+          <h3>{{ movement.description | showAmountCharacters:18 }}</h3>
+
+          <div class="flex__container">
+            <h3>{{ movement.amount | currency | myCurrency }}</h3>
+            <button class="button__delete">
+              <icon-cross class="svg" (click)="deleteMovement($index)" />
+            </button>
+          </div>
+        </div>
+      }
+
+    } @empty {
+      <h3 class="empty-list">No hay movimientos</h3>
+    }
+    @if(walletStore.movementDayFilter().length > 3) {
+      <p (click)="goToMoreDetails()">Ver más...</p>
+    }
+  </div>
+
+  <div class="footer__container">
+    @if(walletStore.movementDayFilter().length > 0) {
+      <div class="total__expense-day">
+        <h2>TOTAL</h2>
+        <h2>{{ totalPriceOfMovements() | currency | myCurrency }}</h2>
+      </div>
+    }
+
+    <button class="button__add">
+      <!-- <app-svg-button-add (click)="goToMoreDetails()"></app-svg-button-add> -->
+    </button>
+  </div>
+
+</section>

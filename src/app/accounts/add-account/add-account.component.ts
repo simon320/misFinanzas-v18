@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { PATH } from '../../common/enums/enum';
 import { Account } from '../../common/interfaces/interface';
-import { WalletStore } from '../../store/wallet-store.service';
+import { WalletStore } from '../../store/wallet.store';
 import { ToastService } from '../../common/components/toast/toast.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { ToastService } from '../../common/components/toast/toast.service';
 export class AddAccountComponent {
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private walletStore = inject(WalletStore);
+  readonly walletStore = inject(WalletStore);
   private toastService = inject(ToastService);
 
   public form!: FormGroup;
@@ -55,20 +55,18 @@ export class AddAccountComponent {
       name,
       type: typeAccount,
       amount: amount ? amount : 0,
-      movements: []
+      movements: [],
+      debit: false
     }
 
     return newAccount;
   }
 
   public addAccount(): void {
-    const newAccount = this.getDataOfForm();
-
-    if(newAccount) {
-      this.walletStore.addAccount(newAccount);
-      this.form.reset();
-      this.toastService.show('SUCCESS', 'Perfecto', 'Cuenta creada con exito');
-      this.router.navigateByUrl(PATH.ACCOUNTS);
-    }
+    this.walletStore.addAccount(this.getDataOfForm()!);
+    this.form.reset();
+    this.toastService.show('SUCCESS', 'Cuenta creada con exito');
+    this.router.navigateByUrl(PATH.ACCOUNTS);
   }
+
 }

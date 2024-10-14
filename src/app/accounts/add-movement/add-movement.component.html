@@ -7,7 +7,7 @@
     <div class="input__container">
       <label class="label__input" for="account">CUENTA</label>
       <select id="account" formControlName="accountId">
-        @for(account of accounts(); track $index) {
+        @for(account of walletStore.accounts(); track $index) {
           <option [value]="account.id">{{ account.name }}</option>
         }
       </select>

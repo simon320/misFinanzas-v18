@@ -14,7 +14,7 @@ export class NavMenuComponent {
 
   public listOptions = [
     { route: "dashboard/accounts" },
-    { route: "dashboard/home" },
+    { route: "dashboard/calendar" },
     { route: "dashboard/add-movement" },
     { route: "dashboard/savings" },
     { route: "dashboard/home" }

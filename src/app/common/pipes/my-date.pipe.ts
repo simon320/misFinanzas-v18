@@ -9,6 +9,8 @@ export class MyDatePipe implements PipeTransform {
   transform(value: Date): string {
       const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado","Domingo"];
       const date  = new Date(value);
+      date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+
       const monthDayNumber = date.getUTCDate();
       let weekDayNumber = date.getDay() === 0 ? 6 : (date.getDay() -1)
 

@@ -1,5 +1,6 @@
 .toast__container {
   position: fixed;
+  bottom: 0;
   padding: 1.1rem;
   border-radius: 10px;
   display: flex;
@@ -7,7 +8,7 @@
   justify-content: space-between;
 
   width: 100%;
-  height: 130px;
+  height: 95px;
 
   color: var(--toast-text);
   font-weight: 600;
@@ -18,21 +19,24 @@
   animation-duration: .2s;
 }
 
+.svg {
+  align-self: center;
+}
+
+.confirm {
+  gap: 1rem;
+  background: #85622b;
+  border: 1px solid var(--toast-error-border);
+}
 
 .error {
   background: var(--toast-error);
   border: 1px solid var(--toast-error-border);
 }
-.svg__error {
-  align-self: center;
-}
 
 .success {
   background: var(--toast-success);
   border: 1px solid var(--toast-success-border);
-}
-.svg__success {
-  align-self: center;
 }
 
 .text {

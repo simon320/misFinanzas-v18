@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit {
     else {
       this.toastService.show(
         'ERROR',
-        'Lo siento...',
         'Los datos ingresados no son correctos.'
       );
     }

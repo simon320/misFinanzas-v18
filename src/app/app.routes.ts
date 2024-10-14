@@ -4,10 +4,12 @@ import { authGuard } from './guards/auth.guard';
 import { hasSessionGuard } from './guards/has-session.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AccountsComponent } from './accounts/view-accounts/accounts.component';
 import { AddAccountComponent } from './accounts/add-account/add-account.component';
 import { AddMovementComponent } from './accounts/add-movement/add-movement.component';
+import { CardPositionChangerComponent } from './accounts/card-position-changer/card-position-changer.component';
 
 export const routes: Routes = [
   {
@@ -32,15 +34,21 @@ export const routes: Routes = [
       {
         path: 'accounts',
         loadComponent: () => import('./accounts/view-accounts/accounts.component').then(()=> AccountsComponent),
+        children: [
+          {
+            path: 'order-accounts',
+            loadComponent: () => import('./accounts/card-position-changer/card-position-changer.component').then(()=> CardPositionChangerComponent),
+          },
+        ]
       },
       {
         path: 'add-movement',
         loadComponent: () => import('./accounts/add-movement/add-movement.component').then(()=> AddMovementComponent),
       },
-      // {
-      //   path: 'home',
-      //   loadComponent: () => import('./dashboard/pages/home/home.component')
-      // },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./calendar/calendar.component').then(()=> CalendarComponent),
+      },
       // {
       //   path: 'day',
       //   loadComponent: () => import('./dashboard/pages/day/day.component')
@@ -51,7 +59,7 @@ export const routes: Routes = [
       // },
       {
         path: '',
-        redirectTo: 'add-account',
+        redirectTo: 'accounts',
         pathMatch: 'full'
       },
     ]

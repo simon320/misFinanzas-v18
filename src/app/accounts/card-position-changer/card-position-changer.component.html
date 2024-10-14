@@ -1,0 +1,30 @@
+<section>
+  <div class="modal__container">
+
+    <div class="header__container">
+      <icon-cross class="svg" (click)="closeModal()"/>
+      <p> Toma una cuenta y arrastrala a la posicion deseada.</p>
+    </div>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="walletStore.accounts()"
+      (cdkDropListDropped)="moveAccounts($event)"
+      >
+      @for (account of walletStore.accounts(); track $index) {
+        <div class="rows__container">
+          <div class="index__container">{{ $index + 1 }}</div>
+
+          <div class="card__container" cdkDrag [cdkDragData]="account">
+            <div class="card">
+              <icon-handle-drag />
+              <h1 class="account__name">{{ account.name! | showAmountCharacters:12 }}</h1>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+
+  </div>
+</section>
