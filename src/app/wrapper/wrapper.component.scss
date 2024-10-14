@@ -1,0 +1,92 @@
+section {
+  background: var(--dark-blue);
+  width: 100%;
+  height: 100vh;
+  overflow-x: scroll;
+}
+
+.hidden-y {
+overflow-y: hidden;
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.acount__container {
+  position: relative;
+  max-width: 120px;
+  min-height: 90px;
+  padding-top: 5rem;
+  padding-left: 1rem;
+  view-transition-name: amountTransition;
+
+  h2 {
+      color: var(--light-green);
+      font-size: 2.5rem;
+      margin-bottom: 0;
+  }
+
+  span {
+      color: var(--light-grey);
+      font-size: 1.2rem;
+      position: absolute;
+      right: -40px;
+      bottom: -15px;
+  }
+}
+
+.configcard__container {
+display: flex;
+flex-direction: column;
+}
+
+.button__container {
+  display: flex;
+  gap: 2.2rem;
+  margin: 2rem auto;
+
+  .card__button {
+      border: 1px solid var(--card-btn);
+      border-radius: 20px;
+      box-shadow: 0 3px 6px rgba($color: var(--card-shadow), $alpha: 0.2);
+      width: 155px;
+      height: 125px;
+  }
+}
+
+.background {
+background-color: var(--medium-blue);
+}
+
+@keyframes showPanel {
+0% { height: 72%; }
+50% { height: 92%; background: var(--trasition-blue); }
+100% { height: 90%; }
+}
+
+@keyframes backgroundShine {
+50% { background: var(--trasition-blue); }
+}
+
+@keyframes closePanel {
+0% { height: 90%; }
+50% { height: 70%; }
+100% { height: 75%; }
+}
+
+@keyframes moveHeader {
+0% { padding-top: 5.1rem; }
+100% { padding-top: 8px; }
+}
+
+@keyframes downHeader {
+0% { padding-top: 8px; }
+100% { padding-top: 5rem; }
+}
+
+@keyframes minHeight {
+0% { height: 100%; opacity: .5; }
+100% { height: 0%; opacity: 0; }
+}

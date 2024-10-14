@@ -67,12 +67,12 @@ export class LoginComponent implements OnInit {
     const { mail, password } = this.loginForm.value;
 
     if( this.authService.login(mail, password) ) {
-      this.router.navigateByUrl('');
+      localStorage.setItem('tokenMF', mail);
+      this.router.navigateByUrl(PATH.DASHBOARD);
     }
     else {
       this.toastService.show(
         'ERROR',
-        'Lo siento...',
         'Los datos ingresados no son correctos.'
       );
     }

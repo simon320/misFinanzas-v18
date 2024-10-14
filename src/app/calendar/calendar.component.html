@@ -1,0 +1,92 @@
+
+<div class="header__info">
+
+  @if (buttonnConfig) {
+    <div #headerWrapper class="amount__container">
+      @if(walletStore.moneyPerDay()) {
+        <h2 class="amount">{{ walletStore.moneyPerDay()| currency | myCurrency }}</h2>
+      }
+      @else {
+        <h2 class="amount">Sin configurar</h2>
+      }
+      <span>Disponible por dia</span>
+    </div>
+
+    <div class="config__container">
+      <button (click)="configAmountPerDay()">Configurar gasto diario</button>
+    </div>
+  }
+  @else {
+    <div class="instructions__container">
+      <icon-cross (click)="closeConfig()"/>
+      <div class="amount__container">
+        <h3>{{ textInstructions() }}</h3>
+        @if (buttonnAccept) {
+          <icon-check (click)="confirmConfig()" />
+        }
+      </div>
+    </div>
+  }
+
+</div>
+
+<section #calendarWrapper class="calendar__container">
+
+    <div class="header__calendar">
+      <button class="button" (click)="getPrevMonth()">
+        <icon-arrow-left />
+      </button>
+      <p>
+        {{ monthNames[selectedDate.getMonth()] }} - {{ selectedDate.getFullYear() }}
+      </p>
+
+      <button class="button" (click)="getNextMonth()">
+        <icon-arrow-right />
+      </button>
+    </div>
+
+    <table #calendarFrame class="table">
+      <thead>
+        <tr class="line">
+          @for (day of daysShort; track $index) {
+            <th>{{ day | uppercase }}</th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (col of calendarRows; track $index) {
+        <tr>
+          @for (col of calendarRows[$index]; track $index) {
+          <td class="position__relative {{ col.classes }} {{ col.date > todayFormatted && col.date === walletStore.startSelectedDay() && 'background__corner' }}">
+
+            @if( walletStore.startSelectedDay() && col.date === todayFormatted && col.date > walletStore.startSelectedDay() ) {
+              <div class="{{ col.date === todayFormatted && 'today__background' }}" ></div>
+            }
+            <div #day
+              class="
+                {{ col.classes }}
+                {{ col.date === todayFormatted && 'today' }}
+                {{ col.date === walletStore.daySelected() && 'border-highlight' }}
+                {{ col.date > todayFormatted && col.date === walletStore.startSelectedDay() && 'background__corner' }}
+                {{ (!!walletStore.startSelectedDay() && col.date < todayFormatted && col.date >= walletStore.startSelectedDay()) && 'previous_days' }}
+                {{ (!!walletStore.startSelectedDay() && col.date === walletStore.startSelectedDay()) && 'in-start-day' }}
+                {{ (!!walletStore.endSelectedDay() && col.date > todayFormatted && col.date <= walletStore.endSelectedDay()) && 'future_days' }}
+                {{ (!!walletStore.endSelectedDay() && col.date === walletStore.endSelectedDay()) && 'in-end-day' }}
+                {{ ((col.date >= walletStore.startSelectedDay()) && (col.date <= walletStore.endSelectedDay())) && 'in-selected'  }}
+              "
+              (click)="dateClickHandle(col.date)" >
+                {{ col.value }}
+            </div>
+
+          </td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-day />
+
+</section>
+

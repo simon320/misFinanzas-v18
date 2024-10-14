@@ -1,0 +1,30 @@
+<section class="option__container">
+
+  <h1>Agregar una cuenta</h1>
+
+  <form [formGroup]="form">
+
+    <div class="input__container">
+      <label class="label__input" for="account">TIPO DE CUENTA</label>
+      <select id="account" formControlName="typeAccount">
+        @for(account of accounts; track $index) {
+          <option>{{ account.type }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="input__container">
+      <label class="label__input" for="name">NOMBRE</label>
+      <input id="amount" type="text" placeholder="Nombre de la cuenta" formControlName="name">
+    </div>
+
+    <div class="input__container">
+      <label class="label__input" for="amount">DINERO EN CUENTA</label>
+      <input id="amount" type="number" placeholder="$ 0.00" formControlName="amount">
+    </div>
+
+    <button class="button__accept" type="button" (click)="addAccount()">AGREGAR</button>
+
+  </form>
+
+</section>

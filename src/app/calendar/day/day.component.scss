@@ -1,0 +1,104 @@
+.option__container {
+  position: relative;
+  background: var(--medium-blue);
+  height: 95%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.header__container {
+  width: 100%;
+  padding: .8rem;
+  margin: auto;
+  border-bottom: 1px solid var(--light-green);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  h2 {
+    color: var(--light-green);
+  }
+
+  p {
+    color: var(--light-grey);
+    font-size: 10px;
+  }
+}
+
+h3 {
+  color: var(--light-grey);
+}
+
+.empty-list {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.body__container {
+  width: 100%;
+  margin: auto;
+  padding-left: .8rem;
+  display: flex;
+  flex-direction: column;
+
+  .movement__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .flex__container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  p {
+    margin-top: 1rem;
+    color: var(--dark-grey);
+  }
+
+  .button__delete {
+    height: 45px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .svg {
+      color: var(--light-green);
+    }
+  }
+}
+
+.footer__container {
+  display: flex;
+  flex-direction: column;
+  color: var(--light-grey);
+
+  .total__expense-day {
+    display: flex;
+    align-self: flex-end;
+    h2 {
+      margin: .8rem;
+    }
+  }
+
+  .button__add {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 115px;
+    height: 115px;
+  }
+}
+
+button {
+  border: none;
+  background: none;
+}

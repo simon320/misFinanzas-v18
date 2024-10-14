@@ -1,0 +1,47 @@
+<section class="option__container">
+
+  <h1>Agregar un movimiento</h1>
+
+  <form [formGroup]="form">
+
+    <div class="input__container">
+      <label class="label__input" for="account">CUENTA</label>
+      <select id="account" formControlName="accountId">
+        @for(account of walletStore.accounts(); track $index) {
+          <option [value]="account.id">{{ account.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="input-doble__container">
+      <div class="input__container">
+        <label class="label__input" for="date">FECHA</label>
+        <input id="date" type="date" formControlName="date">
+      </div>
+      <div class="input__container">
+        <label class="label__input" for="amount">MONTO</label>
+        <input id="amount" type="number" placeholder="$ 0.00" formControlName="amount">
+      </div>
+    </div>
+
+    <div class="input__container">
+      <label class="label__input" for="description">DESCRIPCION</label>
+      <textarea id="description" cols="10" rows="3" placeholder="..." formControlName="description"></textarea>
+    </div>
+
+    <div class='container-checkbox'>
+      <label>
+        <input type="checkbox" formControlName="character"/>
+        <span>
+          <p class="label__p-expense">GASTO</p>
+          <p class="label__p-income">INGRESO</p>
+        </span>
+        <i class='indicator-checkbox-uno'></i>
+      </label>
+    </div>
+
+    <button class="button__accept" type="button" (click)="saveForm()">AGREGAR</button>
+
+  </form>
+
+</section>
