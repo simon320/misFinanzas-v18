@@ -1,4 +1,4 @@
-
+<!--
 <div class="header__info">
 
   @if (buttonnConfig) {
@@ -28,9 +28,15 @@
     </div>
   }
 
+</div> -->
+
+
+<div class="account__container">
+  <h2 class="amount">{{ walletStore.moneyPerDay() | currency | myCurrency }}</h2>
+  <span>Disponible por dia</span>
 </div>
 
-<section #calendarWrapper class="calendar__container">
+<section class="calendar__container">
 
     <div class="header__calendar">
       <button class="button" (click)="getPrevMonth()">
@@ -67,7 +73,7 @@
               class="
                 {{ col.classes }}
                 {{ col.date === todayFormatted && 'today' }}
-                {{ col.date === walletStore.daySelected() && 'border-highlight' }}
+                {{ col.date === walletStore.daySelected() && 'selected-highlight' }}
                 {{ col.date > todayFormatted && col.date === walletStore.startSelectedDay() && 'background__corner' }}
                 {{ (!!walletStore.startSelectedDay() && col.date < todayFormatted && col.date >= walletStore.startSelectedDay()) && 'previous_days' }}
                 {{ (!!walletStore.startSelectedDay() && col.date === walletStore.startSelectedDay()) && 'in-start-day' }}
@@ -87,6 +93,24 @@
     </table>
 
     <app-day />
+    <!-- <div class="movements__container">
+      @for(movement of walletStore.movementDayFilter(); track $index; let first = $first; let last = $last) {
+        @if(first || formattedDate( movement.day ) !== formattedDate( walletStore.movementDayFilter()[$index -1].day )) {
+          <h3 class="label__date">{{ movement.day | myDate }}</h3>
+        }
+        <div [ngClass]="{'last__movement' : last}" class="movements">
+          <div class="label">
+            <p>{{ movement.description | titlecase | showAmountCharacters:18 }}</p>
+          </div>
+          @if(movement.character === 'income') {
+            <p class="income">+ {{ movement.amount | currency | myCurrency }}</p>
+          } @else {
+            <p class="expense">- {{ movement.amount | currency | myCurrency }}</p>
+          }
+        </div>
+        }
+
+    </div> -->
 
 </section>
 

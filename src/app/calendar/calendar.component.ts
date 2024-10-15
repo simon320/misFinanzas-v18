@@ -9,6 +9,9 @@ import { ArrowLeftSVG } from "../common/icons/arrow-left.svg";
 import { ArrowRightSVG } from "../common/icons/arrow-right.svg";
 import { MyCurrencyPipe } from '../common/pipes/my-currency.pipe';
 import { UtilsDaysShort, effectMoney, getDateFormatt, returnsDifferenceInDays, saveAmountPerDay, utilsMonthNames } from '../common/utils/utils';
+import { MyDatePipe } from '../common/pipes/my-date.pipe';
+import { ShowAmountCharactersPipe } from "../common/pipes/my-short-description.pipe";
+import { Movement } from '../common/interfaces/interface';
 
 enum TextInstructions {
   step1 = 'Presiona en el calendario el dia de incio',
@@ -19,7 +22,7 @@ enum TextInstructions {
 @Component({
   standalone: true,
   selector: 'app-calendar',
-  imports: [ CommonModule, MyCurrencyPipe, CrossSVG, CheckSVG, DayComponent, ArrowLeftSVG, ArrowRightSVG ],
+  imports: [CommonModule, MyCurrencyPipe, MyDatePipe, CrossSVG, CheckSVG, DayComponent, ArrowLeftSVG, ArrowRightSVG, ShowAmountCharactersPipe],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
@@ -29,7 +32,6 @@ export class CalendarComponent implements OnInit {
 
   public day: Signal<ElementRef<HTMLElement> | undefined> = viewChild('day');
   public headerWrapper: Signal<ElementRef<HTMLElement> | undefined> = viewChild('headerWrapper');
-  public calendarWrapper: Signal<ElementRef<HTMLElement> | undefined> = viewChild('calendarWrapper');
 
   public amount = signal(0);
   public calendarRows: any;
@@ -59,7 +61,6 @@ export class CalendarComponent implements OnInit {
   public configAmountPerDay(): void {
     this.buttonnConfig = false;
     this.render.addClass(this.headerWrapper()?.nativeElement, 'fade-out');
-    this.render.addClass(this.calendarWrapper()?.nativeElement, 'calendar-highlights');
   }
 
 
@@ -73,9 +74,6 @@ export class CalendarComponent implements OnInit {
 
   private openDaySelect(date: Date): void {
     this.walletStore.setDaySelect(date);
-
-    this.render.addClass(this.calendarWrapper()?.nativeElement, 'calendar-border-close');
-    this.render.addClass(this.calendarWrapper()?.nativeElement, 'calendar-fullview');
   }
 
   private setStepInstruction(date: Date): void {
@@ -212,6 +210,16 @@ export class CalendarComponent implements OnInit {
     if(date === this.walletStore.startSelectedDay()) return 'in-start-day'
     if(date === this.walletStore.endSelectedDay()) return 'in-end-day'
     return ((date >= this.walletStore.startSelectedDay()) && (date <= this.walletStore.endSelectedDay())) ? 'in-selected' : monthPosition
+  }
+
+  public formattedDate(value: Date): string {
+    const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado","Domingo"];
+    const date  = new Date(value);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+    const monthDayNumber = date.getUTCDate();
+    let weekDayNumber = date.getDay() === 0 ? 6 : (date.getDay() -1)
+
+    return days[weekDayNumber] + " " + monthDayNumber;
   }
 
 }
