@@ -26,6 +26,16 @@ export const getDateFormatt = (date: string) => {
 
 
 
+export const formatDate = (date: Date): string => {
+  const newDate = new Date(date);
+  newDate.setMinutes(newDate.getMinutes() + newDate.getTimezoneOffset());
+  const year = newDate.getFullYear();
+  const month = (newDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = newDate.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+
 export const utilsMonthNames = [
   'Enero', 'Febrero', 'Marzo', 'Abril',
   'Mayo', 'Junio', 'Julio', 'Agosto',

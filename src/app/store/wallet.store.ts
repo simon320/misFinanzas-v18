@@ -2,7 +2,7 @@ import { computed } from '@angular/core';
 import { patchState, signalStore, watchState, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 
 import { Account, Movement, Wallet } from '../common/interfaces/interface';
-import { returnsDifferenceInDays, saveAmountPerDay } from '../common/utils/utils';
+import { formatDate, returnsDifferenceInDays, saveAmountPerDay } from '../common/utils/utils';
 
 
 const intialState: Wallet = {
@@ -30,9 +30,7 @@ export const WalletStore = signalStore(
     movement: computed(() => state.movement()),
     daySelected: computed(() => state.day()),
     movementDayFilter: computed(() => state.movement() &&
-        state.movement().filter((movement: Movement) =>
-            movement.day.toString().slice(0, 10).split('-').join('/') === state.day()?.toString()
-        ).reverse()
+        state.movement().filter((movement: Movement) => formatDate( movement.day ) === formatDate( state.day()) ).reverse()
     ),
     accounts: computed(() => state.accounts()),
   })),

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 
 import { WalletStore } from '../../store/wallet.store';
 import { CrossSVG } from "../../common/icons/cross.svg";
+import { Movement } from '../../common/interfaces/interface';
 import { MyDatePipe } from '../../common/pipes/my-date.pipe';
 import { MyCurrencyPipe } from '../../common/pipes/my-currency.pipe';
 import { ToastService } from '../../common/components/toast/toast.service';
@@ -18,14 +19,13 @@ import { ShowAmountCharactersPipe } from "../../common/pipes/my-short-descriptio
 export class DayComponent {
   readonly walletStore = inject(WalletStore);
   private toastService = inject(ToastService);
+  public showMovement = signal<Movement[]>([]);
 
   constructor() {
     effect(() => {
-      this.walletStore.movementDayFilter()
-      console.log('dentro ', this.walletStore.movementDayFilter());
-
-    })
-    console.log('fuera ', this.walletStore.movementDayFilter());
+      this.walletStore.daySelected()
+      this.showMovement.set( this.walletStore.movementDayFilter() );
+    }, {allowSignalWrites: true})
   }
 
   public totalPriceOfMovements = computed(() => {
@@ -52,6 +52,16 @@ export class DayComponent {
       this.walletStore.removeMovement( this.walletStore.movementDayFilter()[index] );
 
     return;
+  }
+
+  public formattedDate(value: Date): string {
+    const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado","Domingo"];
+    const date  = new Date(value);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+    const monthDayNumber = date.getUTCDate();
+    let weekDayNumber = date.getDay() === 0 ? 6 : (date.getDay() -1)
+
+    return days[weekDayNumber] + " " + monthDayNumber;
   }
 
 }

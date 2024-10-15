@@ -1,104 +1,49 @@
-.option__container {
-  position: relative;
-  background: var(--medium-blue);
-  height: 95%;
-  width: 100%;
 
+.movements__container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-}
+  align-items: center;
+  margin-bottom: 6rem;
 
-.header__container {
-  width: 100%;
-  padding: .8rem;
-  margin: auto;
-  border-bottom: 1px solid var(--light-green);
-
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  h2 {
-    color: var(--light-green);
-  }
-
-  p {
-    color: var(--light-grey);
-    font-size: 10px;
-  }
-}
-
-h3 {
-  color: var(--light-grey);
-}
-
-.empty-list {
-  text-align: center;
-  margin-top: 3rem;
-}
-
-.body__container {
-  width: 100%;
-  margin: auto;
-  padding-left: .8rem;
-  display: flex;
-  flex-direction: column;
-
-  .movement__container {
+  .movements {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
+    padding: 1rem .8rem;
 
-
-    .flex__container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    border-bottom: 1px rgba(118, 118, 118, 0.162) solid;
   }
 
-  p {
-    margin-top: 1rem;
-    color: var(--dark-grey);
+  .expense {
+    color: rgb(164, 164, 164);
   }
 
-  .button__delete {
-    height: 45px;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .svg {
-      color: var(--light-green);
-    }
-  }
-}
-
-.footer__container {
-  display: flex;
-  flex-direction: column;
-  color: var(--light-grey);
-
-  .total__expense-day {
-    display: flex;
-    align-self: flex-end;
-    h2 {
-      margin: .8rem;
-    }
+  .income {
+    color: var(--light-green);
   }
 
-  .button__add {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 115px;
-    height: 115px;
+  .label__date {
+    background: linear-gradient(-220deg, #2f908d1b, #33fbf117);
+    width: 95%;
+    border-radius: 5px;
+    color: aliceblue;
+    padding: 2px 10px;
+    font-weight: 300;
+    text-align: center;
   }
-}
 
-button {
-  border: none;
-  background: none;
+  .text-end {
+    text-align: end;
+  }
+
+  .empty {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: large;
+    color: bisque;
+  }
+
 }
