@@ -12,7 +12,7 @@
   </div>
 
   <div class="body__container">
-    @for (movement of walletStore.movementDayFilter(); track $index) {
+    @for (movement of showMovement(); track $index) {
       @if($index < 4){
         <div class="movement__container">
           <h3>{{ movement.description | showAmountCharacters:18 }}</h3>
@@ -29,13 +29,13 @@
     } @empty {
       <h3 class="empty-list">No hay movimientos</h3>
     }
-    @if(walletStore.movementDayFilter().length > 3) {
+    @if(showMovement().length > 3) {
       <p (click)="goToMoreDetails()">Ver más...</p>
     }
   </div>
 
   <div class="footer__container">
-    @if(walletStore.movementDayFilter().length > 0) {
+    @if(showMovement().length > 0) {
       <div class="total__expense-day">
         <h2>TOTAL</h2>
         <h2>{{ totalPriceOfMovements() | currency | myCurrency }}</h2>

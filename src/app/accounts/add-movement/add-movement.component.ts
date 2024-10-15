@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { PATH } from '../../common/enums/enum';
 import { WalletStore } from '../../store/wallet.store';
@@ -10,7 +10,7 @@ import { ToastService } from '../../common/components/toast/toast.service';
 @Component({
   selector: 'app-add-movement',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ ReactiveFormsModule ],
   templateUrl: './add-movement.component.html',
   styleUrl: './add-movement.component.scss'
 })
