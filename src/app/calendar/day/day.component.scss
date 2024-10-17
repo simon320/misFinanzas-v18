@@ -46,4 +46,13 @@
     color: bisque;
   }
 
+  .flex-row {
+    display: flex;
+    align-items: center;
+  }
+
+  icon-cross {
+    transform: scale(.7);
+  }
+
 }

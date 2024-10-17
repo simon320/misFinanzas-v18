@@ -1,6 +1,6 @@
-import { BellSVG } from "../common/icons/bell.svg";
 import { UserStore } from '../store/user.store';
 import { Component, inject } from '@angular/core';
+import { BellSVG } from "../common/icons/bell.svg";
 import { BellPlusSVG } from "../common/icons/bell-plus.svg";
 
 @Component({
@@ -12,4 +12,5 @@ import { BellPlusSVG } from "../common/icons/bell-plus.svg";
 })
 export class HeaderComponent {
   readonly userStore = inject(UserStore);
+  public image = "/web-app-manifest-192x192.png";
 }

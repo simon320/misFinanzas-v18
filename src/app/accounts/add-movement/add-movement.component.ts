@@ -63,17 +63,6 @@ export class AddMovementComponent {
       return false;
   }
 
-  // FIXME: cambiar los movimientos a general
-  private setMovementInAccount(newMovement: Movement): Account[] {
-    this.walletStore.accounts().map( account => {
-      if(account.id === newMovement.accountId) {
-        account.movements?.unshift( newMovement );
-      }
-    });
-
-    return this.walletStore.accounts();
-  }
-
 
   public saveForm(): void {
     if(this.checkInvalidForm())
@@ -81,27 +70,22 @@ export class AddMovementComponent {
 
     const { accountId, description, amount, character, date } = this.form.value;
     let accountSelected = this.walletStore.accounts().find( account => account.id === accountId);
+    const isCreditCard = accountSelected!.type === 'Tarjeta de Credito';
+    const isDebitedCreditCard = accountSelected!.debit;
 
     if(this.checkInsufficientFunds(accountSelected!, amount, character))
       return;
 
-    let type: 'expense' | 'income';
+    const type = character ? 'income' : 'expense';
     let totalMoney = this.walletStore.totalMoney();
 
-    if( character === true ) {
-      type = 'income';
-      totalMoney += amount;
-      accountSelected!.amount += amount;
+    if( type === 'expense' ) {
+      totalMoney -= (isCreditCard && !isDebitedCreditCard) ? 0 : amount;
+      accountSelected!.amount += isCreditCard ? amount : -amount;
     }
     else {
-      type = 'expense';
-      if(accountSelected?.type !== 'Tarjeta de Credito') {
-        totalMoney -= amount;
-        accountSelected!.amount! -= amount;
-      }
-      else {
-        accountSelected!.amount! += amount;
-      }
+      totalMoney += (isCreditCard && !isDebitedCreditCard) ? 0 : amount;
+      accountSelected!.amount! += isCreditCard ? -amount : amount;
     }
 
     const newMovement: Movement = {

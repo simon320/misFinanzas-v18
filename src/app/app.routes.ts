@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 
 import { authGuard } from './guards/auth.guard';
+import { ConfigComponent } from './config/config.component';
 import { hasSessionGuard } from './guards/has-session.guard';
 import { LoginComponent } from './auth/login/login.component';
+import { SavingsComponent } from './savings/savings.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -49,14 +51,14 @@ export const routes: Routes = [
         path: 'calendar',
         loadComponent: () => import('./calendar/calendar.component').then(()=> CalendarComponent),
       },
-      // {
-      //   path: 'day',
-      //   loadComponent: () => import('./dashboard/pages/day/day.component')
-      // },
-      // {
-      //   path: 'savings',
-      //   loadComponent: () => import('./dashboard/pages/savings/savings.component')
-      // },
+      {
+        path: 'savings',
+        loadComponent: () => import('./savings/savings.component').then(() => SavingsComponent)
+      },
+      {
+        path: 'config',
+        loadComponent: () => import('./config/config.component').then(() => ConfigComponent)
+      },
       {
         path: '',
         redirectTo: 'accounts',

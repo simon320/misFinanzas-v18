@@ -1,39 +1,31 @@
-<!--
-<div class="header__info">
 
+<div class="amount__container">
+  <div>
+    <h2 class="amount">{{ walletStore.moneyPerDay() | currency | myCurrency }}</h2>
+    @if( walletStore.startSelectedDay() && walletStore.endSelectedDay()) {
+      <icon-refresh (click)="refreshAmountPerDay()"/>
+    }
+    @else {
+      <span style="margin-left: .4rem;">(sin configurar)</span>
+    }
+  </div>
+
+  <span>Disponible por dia</span>
+</div>
+
+<div class="config__container">
   @if (buttonnConfig) {
-    <div #headerWrapper class="amount__container">
-      @if(walletStore.moneyPerDay()) {
-        <h2 class="amount">{{ walletStore.moneyPerDay()| currency | myCurrency }}</h2>
-      }
-      @else {
-        <h2 class="amount">Sin configurar</h2>
-      }
-      <span>Disponible por dia</span>
-    </div>
-
-    <div class="config__container">
       <button (click)="configAmountPerDay()">Configurar gasto diario</button>
-    </div>
   }
   @else {
     <div class="instructions__container">
+      <h3>{{ textInstructions() }}</h3>
       <icon-cross (click)="closeConfig()"/>
-      <div class="amount__container">
-        <h3>{{ textInstructions() }}</h3>
-        @if (buttonnAccept) {
-          <icon-check (click)="confirmConfig()" />
-        }
-      </div>
+      @if (buttonnAccept) {
+        <icon-check (click)="confirmConfig()" />
+      }
     </div>
   }
-
-</div> -->
-
-
-<div class="account__container">
-  <h2 class="amount">{{ walletStore.moneyPerDay() | currency | myCurrency }}</h2>
-  <span>Disponible por dia</span>
 </div>
 
 <section class="calendar__container">
@@ -93,24 +85,5 @@
     </table>
 
     <app-day />
-    <!-- <div class="movements__container">
-      @for(movement of walletStore.movementDayFilter(); track $index; let first = $first; let last = $last) {
-        @if(first || formattedDate( movement.day ) !== formattedDate( walletStore.movementDayFilter()[$index -1].day )) {
-          <h3 class="label__date">{{ movement.day | myDate }}</h3>
-        }
-        <div [ngClass]="{'last__movement' : last}" class="movements">
-          <div class="label">
-            <p>{{ movement.description | titlecase | showAmountCharacters:18 }}</p>
-          </div>
-          @if(movement.character === 'income') {
-            <p class="income">+ {{ movement.amount | currency | myCurrency }}</p>
-          } @else {
-            <p class="expense">- {{ movement.amount | currency | myCurrency }}</p>
-          }
-        </div>
-        }
-
-    </div> -->
 
 </section>
-

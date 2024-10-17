@@ -3,7 +3,7 @@
 
     <div class="header__container">
       <icon-cross class="svg" (click)="closeModal()"/>
-      <p> Toma una cuenta y arrastrala a la posicion deseada.</p>
+      <p> Cambia el orden en el que se ven tus cuentas arrastrandolas.</p>
     </div>
 
     <div
@@ -17,7 +17,7 @@
 
           <div class="card__container" cdkDrag [cdkDragData]="account">
             <div class="card">
-              <icon-handle-drag />
+              <icon-handle-drag cdkDragHandle/>
               <h1 class="account__name">{{ account.name! | showAmountCharacters:12 }}</h1>
             </div>
           </div>

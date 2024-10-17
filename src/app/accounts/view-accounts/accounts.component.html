@@ -4,7 +4,9 @@
   <div class="account__container">
     <h2 class="amount">{{ totalAmount() | currency | myCurrency }}</h2>
     <span>Total</span>
-    <icon-order (click)="showModal()"/>
+    @if(accounts().length > 1) {
+      <icon-order (click)="showModal()"/>
+    }
   </div>
 
 
@@ -39,7 +41,7 @@
 
 
   <div class="buttons__container">
-    @if(accounts() && accounts().length !== 0) {
+    <!-- @if(accounts() && accounts().length !== 0) {
       @if(this.selectedAccount().type === 'Tarjeta de Credito') {
         <div class="set__button">
           <button id="add">
@@ -48,7 +50,7 @@
           </button>
         </div>
       }
-    }
+    } -->
     <div class="set__button">
       <button id="add" (click)="addAccount()">
         <icon-plus />
