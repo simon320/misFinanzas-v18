@@ -7,11 +7,15 @@
       <div class="label">
         <p>{{ movement.description | titlecase | showAmountCharacters:18 }}</p>
       </div>
-      @if(movement.character === 'income') {
-        <p class="income">+ {{ movement.amount | currency | myCurrency }}</p>
-      } @else {
-        <p class="expense">- {{ movement.amount | currency | myCurrency }}</p>
-      }
+
+      <div class="flex-row">
+        @if(movement.character === 'income') {
+          <p class="income">+ {{ movement.amount | currency | myCurrency }}</p>
+        } @else {
+          <p class="expense">- {{ movement.amount | currency | myCurrency }}</p>
+        }
+        <icon-cross (click)="deleteMovement($index)"/>
+      </div>
     </div>
   }
   @empty {

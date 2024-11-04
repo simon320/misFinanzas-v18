@@ -17,7 +17,7 @@ export class NavMenuComponent {
     { route: "dashboard/calendar" },
     { route: "dashboard/add-movement" },
     { route: "dashboard/savings" },
-    { route: "dashboard/home" }
+    { route: "dashboard/config" }
   ];
 
   constructor(private router: Router) {}

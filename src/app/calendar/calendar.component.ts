@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, OnInit, Renderer2, Signal, signal, viewChild } from '@angular/core';
 
+import { DayService } from '../store/day.service';
 import { DayComponent } from "./day/day.component";
 import { WalletStore } from '../store/wallet.store';
 import { CrossSVG } from '../common/icons/cross.svg';
 import { CheckSVG } from '../common/icons/check.svg';
+import { RefreshSVG } from "../common/icons/refresh.svg";
+import { MyDatePipe } from '../common/pipes/my-date.pipe';
 import { ArrowLeftSVG } from "../common/icons/arrow-left.svg";
 import { ArrowRightSVG } from "../common/icons/arrow-right.svg";
 import { MyCurrencyPipe } from '../common/pipes/my-currency.pipe';
-import { UtilsDaysShort, effectMoney, getDateFormatt, returnsDifferenceInDays, saveAmountPerDay, utilsMonthNames } from '../common/utils/utils';
-import { MyDatePipe } from '../common/pipes/my-date.pipe';
 import { ShowAmountCharactersPipe } from "../common/pipes/my-short-description.pipe";
-import { Movement } from '../common/interfaces/interface';
+import { UtilsDaysShort, effectMoney, getDateFormatt, returnsDifferenceInDays, saveAmountPerDay, utilsMonthNames } from '../common/utils/utils';
 
 enum TextInstructions {
   step1 = 'Presiona en el calendario el dia de incio',
@@ -22,16 +23,16 @@ enum TextInstructions {
 @Component({
   standalone: true,
   selector: 'app-calendar',
-  imports: [CommonModule, MyCurrencyPipe, MyDatePipe, CrossSVG, CheckSVG, DayComponent, ArrowLeftSVG, ArrowRightSVG, ShowAmountCharactersPipe],
+  imports: [CommonModule, MyCurrencyPipe, MyDatePipe, CrossSVG, CheckSVG, DayComponent, ArrowLeftSVG, ArrowRightSVG, ShowAmountCharactersPipe, RefreshSVG],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
   private render = inject(Renderer2);
   readonly walletStore = inject(WalletStore);
+  readonly dayService = inject(DayService);
 
   public day: Signal<ElementRef<HTMLElement> | undefined> = viewChild('day');
-  public headerWrapper: Signal<ElementRef<HTMLElement> | undefined> = viewChild('headerWrapper');
 
   public amount = signal(0);
   public calendarRows: any;
@@ -57,10 +58,13 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  public refreshAmountPerDay(): void {
+    this.dayService.updateAmountPerDay();
+  }
+
 
   public configAmountPerDay(): void {
     this.buttonnConfig = false;
-    this.render.addClass(this.headerWrapper()?.nativeElement, 'fade-out');
   }
 
 

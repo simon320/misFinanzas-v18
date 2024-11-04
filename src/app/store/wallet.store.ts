@@ -63,7 +63,7 @@ export const WalletStore = signalStore(
         patchState(store, { accounts: [ ...store.accounts(), account ] });
     },
 
-    addMovement: (total_money: number, movement: Movement) => patchState(store, { total_money, movement: [ movement, ...store.movement()] }),
+    addMovement: (total_money: number, movement: Movement[]) => patchState(store, { total_money, movement: [ ...movement, ...store.movement()] }),
 
     debitCreditCard: (total_money: number, accounts: Account[]) => patchState(store, { total_money, accounts }),
 
@@ -74,34 +74,31 @@ export const WalletStore = signalStore(
       const accountsList: Account[] = store.accounts();
       let totalMoney: number = store.totalMoney();
 
-      accountsList.map( account => {
-        if(account.id === removedMovement.accountId) {
-          let totalAmountAccount = account.amount ? account.amount : 0;
+      accountsList.map(account => {
+        if (account.id === removedMovement.accountId) {
+          let totalAmountAccount = account.amount ?? 0;
+          const isExpense = removedMovement.character === 'expense';
+          const isCreditCard = account.type === 'Tarjeta de Credito';
+          const isNotDebitedCreditCard = !account.debit;
+          const movementAmount = removedMovement.amount;
 
-          if(removedMovement.character === 'expense') {
-            totalMoney += removedMovement.amount
-            totalAmountAccount += removedMovement.amount
-          }
-          else {
-            totalMoney -= removedMovement.amount
-            totalAmountAccount -= removedMovement.amount;
+          if (isExpense) {
+            totalAmountAccount += isCreditCard ? -movementAmount : movementAmount;
+            totalMoney += (isCreditCard && isNotDebitedCreditCard) ? 0 : movementAmount;
+          } else {
+            totalAmountAccount += isCreditCard ? movementAmount : -movementAmount;
+            totalMoney -= (isCreditCard && isNotDebitedCreditCard) ? 0 : movementAmount;
           }
 
           account.amount = totalAmountAccount;
         }
       });
-      const today = new Date();
-      const todayFormatted = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
-      const days: number = returnsDifferenceInDays(todayFormatted, store.endSelectedDay());
 
       patchState(store, {
         movement: newMovementArray,
         accounts: accountsList,
-        total_money: totalMoney,
-        money_per_day: ( days ? totalMoney / days : store.moneyPerDay())
+        total_money: totalMoney
       });
-
-      saveAmountPerDay();
     },
 
   })),

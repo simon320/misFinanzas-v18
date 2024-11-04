@@ -150,14 +150,8 @@ export class AccountsComponent implements AfterViewInit {
     this.toastService.show('SUCCESS', 'Cuenta eliminada con exito');
   }
 
-  public showModal(event?: boolean): void {
+  public showModal(): void {
     this.router.navigateByUrl(PATH.ORDER_ACCOUNTS);
   }
-
-  // public showModal(event?: boolean): void {
-  //   (event !== undefined)
-  //     ? this.visibleModalOrder.set(event)
-  //     : this.visibleModalOrder.set(true);
-  // }
 
 }
