@@ -63,7 +63,7 @@ export const WalletStore = signalStore(
         patchState(store, { accounts: [ ...store.accounts(), account ] });
     },
 
-    addMovement: (total_money: number, movement: Movement) => patchState(store, { total_money, movement: [ movement, ...store.movement()] }),
+    addMovement: (total_money: number, movement: Movement[]) => patchState(store, { total_money, movement: [ ...movement, ...store.movement()] }),
 
     debitCreditCard: (total_money: number, accounts: Account[]) => patchState(store, { total_money, accounts }),
 

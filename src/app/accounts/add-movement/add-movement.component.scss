@@ -1,15 +1,14 @@
 .option__container {
+  position: relative;
+  height: 100%;
+  width: 100vw;
+  bottom: 0;
   padding-top: .4rem;
   padding-bottom: 38%;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  position: relative;
-  bottom: 0;
-  background: var(--trasition-blue);
-  height: 100%;
-  width: 100vw;
-  view-transition-name: containerTransition;
 }
 
 h1 {
@@ -37,13 +36,22 @@ button {
   width: 95%;
 }
 
+.input-doble__container-grid {
+  overflow: hidden;
+
+  width: 100%;
+  padding: 0 1rem;
+  display: grid;
+  grid-template: 20px 40px / 1fr 80px;
+  grid-gap: 0 1rem;
+}
+
 input {
-  background: var(--dark-blue);
+  background: var(--medium-blue-2);
   width: 90%;
   height: 2.5rem;
   border: 2px solid #00000055;
   border-radius: 5px;
-  box-shadow: inset 0 3px 6px rgba(#000000, .5);
   font-size: 1.1rem;
   font-weight: 500;
   color: aliceblue;
@@ -51,15 +59,14 @@ input {
   text-align: end;
 }
 input::placeholder {
-  color: var(--dark-grey);
+  color: var(--dark-grey-2);
 }
 
 textarea {
-  background: var(--dark-blue);
+  background: var(--medium-blue-2);
   width: 90%;
   border: 2px solid #00000055;
   border-radius: 5px;
-  box-shadow: inset 0 3px 6px rgba(#000000, .5);
   font-size: 1.1rem;
   font-weight: 500;
   color: aliceblue;
@@ -72,15 +79,19 @@ textarea {
   height: 50px;
   margin-right: 2rem;
   align-self: flex-end;
+  color: #000000;
   border: none;
   border-radius: 10px;
-  background: var(--button-green);
+  background: var(--light-green);
   box-shadow: 2px 3px 6px #00000073;
 }
 
 select {
-  background: var(--dark-blue);
-  width: 90%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+
+  background: var(--medium-blue-2);
   height: 2.5rem;
   border: 2px solid #00000055;
   border-radius: 5px;
@@ -88,7 +99,52 @@ select {
   padding-left: 1rem;
   text-align: center;
   font-size: 1.1rem;
+
+  transition: all 1s;
 }
+
+.is__credit {
+  grid-column-end: 2;
+}
+
+.container__checkbox__pay {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  position: relative;
+  right: -100px;
+
+  transition: all .2s;
+}
+
+.checkbox__pay {
+  right: 0;
+}
+
+.input-doble__container-grid-2 {
+  width: 100%;
+  padding: 0 1rem;
+
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.not-select-account-debit {
+  position: relative;
+  right: -500px;
+
+  transition: all .5s;
+}
+
+.select__account__debit {
+  right: 0;
+
+  select {
+    width: 100%;
+  }
+}
+
 
 .input__container {
   width: 100%;
@@ -99,16 +155,38 @@ select {
   gap: .2rem;
 }
 
+
 .label__input {
   align-self: flex-start;
   margin-left: 1.5rem;
   color: aliceblue;
 }
 
+.label__grid {
+  color: aliceblue;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  text-wrap: nowrap;
+}
+
+.checkbox__grid {
+  grid-row-start: 2;
+  grid-column-start: 2;
+
+  transform: scale(.4);
+}
+
+.show {
+  display: inline;
+}
+
 
 
 /* SWITCH GASTO-INGRESO */
-.container-checkbox {
+.container__checkbox {
+  position: relative;
+  left: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,9 +214,9 @@ label span {
   width: 295px;
   height: 50px;
   border: 2px solid #00000055;
-  background: var(--dark-blue);
+  background: var(--medium-blue-2);
   border-radius: 40px;
-  box-shadow: inset 0 3px 6px rgba(#000000, .5);
+  box-shadow: inset 0 3px 3px rgba(#000000, .5);
 }
 label .indicator-checkbox-uno {
   position: absolute;
@@ -146,7 +224,7 @@ label .indicator-checkbox-uno {
   left: 10px;
   width: 160px;
   height: 50px;
-  background: var(--button-green);
+  background: var(--light-green);
   border-radius: 45px;
   box-shadow: 0 3px 6px rgba(#00000042, 0.9),
               inset 0 3px 6px rgba(#ffffff73, .5);
@@ -190,11 +268,28 @@ label input:checked ~ .indicator-checkbox-uno::before {
   position: absolute;
   top: 13px;
   left: 60px;
-  color: var(--dark-grey);
+  color: var(--dark-grey-2);
 }
 .label__p-income {
   position: absolute;
   top: 13px;
   left: 200px;
-  color: var(--dark-grey);
+  color: var(--dark-grey-2);
+}
+
+
+.character__movement {
+  position: relative;
+
+  // animation: name duration timing-function delay
+  left: -300px;
+  display: none;
+  transition: left .1s;
+}
+
+@keyframes checkbox-out {
+  0% { left: 0px; }
+  // 30% { left: -100px; }
+  100% { left: -300px; display: none;}
+  // 100% { display: none; }
 }

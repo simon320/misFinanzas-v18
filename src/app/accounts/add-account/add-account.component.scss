@@ -6,7 +6,7 @@
   justify-content: space-around;
   position: relative;
   bottom: 0;
-  background: var(--trasition-blue);
+  background: var(--dark-blue-2);
   height: 100%;
   width: 100vw;
 }
@@ -37,7 +37,7 @@ button {
 }
 
 input {
-  background: var(--dark-blue);
+  background: var(--medium-blue-2);
   width: 90%;
   height: 2.5rem;
   border: 2px solid var(--border-input);
@@ -50,7 +50,7 @@ input {
   text-align: end;
 }
 input::placeholder {
-  color: var(--dark-grey);
+  color: var(--dark-grey-2);
 }
 
 
@@ -68,7 +68,7 @@ input::placeholder {
 }
 
 select {
-  background: var(--dark-blue);
+  background: var(--medium-blue-2);
   width: 90%;
   height: 2.5rem;
   border: 2px solid var(--border-input);

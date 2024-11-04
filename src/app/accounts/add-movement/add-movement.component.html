@@ -4,13 +4,20 @@
 
   <form [formGroup]="form">
 
-    <div class="input__container">
+    <div class="input-doble__container-grid">
+      <!-- Selector de cuenta -->
       <label class="label__input" for="account">CUENTA</label>
-      <select id="account" formControlName="accountId">
+      <select #selectAccount id="account" formControlName="accountId">
         @for(account of walletStore.accounts(); track $index) {
           <option [value]="account.id">{{ account.name }}</option>
         }
       </select>
+
+      <!-- En tarjeta de credito, pago total -->
+      <div #checkboxPayContainer class="container__checkbox__pay">
+        <label class="label__grid" for="amount">PAGO TOTAL</label>
+        <input class="checkbox__grid" type="checkbox" formControlName="checkPay"/>
+      </div>
     </div>
 
     <div class="input-doble__container">
@@ -18,9 +25,11 @@
         <label class="label__input" for="date">FECHA</label>
         <input id="date" type="date" formControlName="date">
       </div>
+
+
       <div class="input__container">
         <label class="label__input" for="amount">MONTO</label>
-        <input id="amount" type="number" placeholder="$ 0.00" formControlName="amount">
+        <input currencyFormat id="amount" type="text" placeholder="$ 0.00" formControlName="amount">
       </div>
     </div>
 
@@ -29,17 +38,30 @@
       <textarea id="description" cols="10" rows="3" placeholder="..." formControlName="description"></textarea>
     </div>
 
-    <div class='container-checkbox'>
-      <label>
-        <input type="checkbox" formControlName="character"/>
-        <span>
-          <p class="label__p-expense">GASTO</p>
-          <p class="label__p-income">INGRESO</p>
-        </span>
-        <i class='indicator-checkbox-uno'></i>
-      </label>
-    </div>
+    <div class="input-doble__container-grid-2">
 
+      <div #characterMovement class="container__checkbox">
+        <label>
+          <input type="checkbox" formControlName="character"/>
+          <span>
+            <p class="label__p-expense">GASTO</p>
+            <p class="label__p-income">INGRESO</p>
+          </span>
+          <i class='indicator-checkbox-uno'></i>
+        </label>
+      </div>
+
+      <!-- Cuenta a debitar el pago total de credito -->
+      <div #selectAccountDebit class="input__container not-select-account-debit">
+        <label class="label__input" for="account">PAGO DESDE</label>
+        <select id="account" formControlName="accountDebitId">
+          @for(account of walletStore.accounts() | inNotCredit; track $index) {
+            <option [value]="account.id">{{ account.name }}</option>
+          }
+        </select>
+      </div>
+
+    </div>
     <button class="button__accept" type="button" (click)="saveForm()">AGREGAR</button>
 
   </form>
