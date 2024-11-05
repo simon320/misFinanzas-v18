@@ -128,9 +128,7 @@ export class AddMovementComponent {
 
     const isCreditCard = accountSelected[0]!.type === 'Tarjeta de Credito';
     const isDebitedCreditCard = accountSelected[0]!.debit;
-    const isTotalPay = accountSelected.length;
-
-    const positionAccountToBeDebited = isTotalPay ? 1 : 0;
+    const positionAccountToBeDebited = this.isTotalPay() ? 1 : 0;
 
     if(this.checkInsufficientFunds(accountSelected[positionAccountToBeDebited]!, amount, character))
       return;
@@ -138,7 +136,7 @@ export class AddMovementComponent {
     const type = character ? 'income' : 'expense';
     let totalMoney = this.walletStore.totalMoney();
 
-    if(isTotalPay) {
+    if(this.isTotalPay()) {
       totalMoney -= amount;
       accountSelected[0]!.amount! += amount;
       accountSelected[1]!.amount! -= amount;
@@ -163,7 +161,7 @@ export class AddMovementComponent {
           description,
           accountId: account.id,
           amount,
-          character: (!isTotalPay || i === 1) ? type : "income",
+          character: (!this.isTotalPay() || i === 1) ? type : "income",
           day: new Date(date)
         }
       )
